@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 import TimerTime from "./TimerTime";
 
@@ -33,19 +33,17 @@ const Timer = ({ timeLeftInMinute, autoStart }) => {
     );
     setBeginTime(false);
   };
-  const reset = useCallback(() => {
+  const reset = () => {
     setBeginTime(false);
     setTime(moment.duration(initialTimeInMillisecond));
     setOldDuration(moment.duration(0));
     if (autoStart) {
       setBeginTime(moment());
     }
-  }, [autoStart, initialTimeInMillisecond]);
+  };
 
   /* Each time the component is update we reset it */
-  useEffect(() => {
-    reset();
-  }, [timeLeftInMinute, reset]);
+  useEffect(reset, [timeLeftInMinute]);
 
   const hasStarted = () => time.asMinutes() !== timeLeftInMinute;
   const isActivate = () => hasStarted() && beginTime;

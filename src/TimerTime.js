@@ -1,38 +1,32 @@
-import React, { useState, useEffect, useCallback} from 'react'
+import React, { useState, useEffect } from "react";
 
-const TimerTime = ({className, time, beginTime, handleRefreshTime}) => {
-    const [idInterval, setIdInterval] = useState(false);
-    const memoise = useCallback(
-        () => {
-            if (beginTime) {
-            setIdInterval(
-                setInterval(() => {
-                    handleRefreshTime(beginTime)
-                }, 500)
-            )
-        }
-        },
-        [beginTime, handleRefreshTime],
-    );
-
-    useEffect(() => {
-        memoise();
-        return clearInterval(idInterval);
+const TimerTime = ({ className, time, beginTime, handleRefreshTime }) => {
+  const [idInterval, setIdInterval] = useState(false);
+  const refreshInterval = () => {
+    if (beginTime) {
+      setIdInterval(
+        setInterval(() => {
+          handleRefreshTime(beginTime);
+        }, 500)
+      );
     }
-    , [beginTime, idInterval, memoise]);
-    const displayTime00 = time =>
-        time.toString().length === 1 ? "0" + time : time;
-    return (
-        <div className={className}>
-            {time
-          ? displayTime00(time.hours()) +
-            ":" +
-            displayTime00(time.minutes()) +
-            ":" +
-            displayTime00(time.seconds())
-          : "00:00:00"}
-        </div>
-    )
+    return clearInterval(idInterval);
+  };
+
+  useEffect(refreshInterval, [beginTime]);
+  const displayTime00 = time =>
+    time.toString().length === 1 ? "0" + time : time;
+  return (
+    <div className={className}>
+      {time
+        ? displayTime00(time.hours()) +
+          ":" +
+          displayTime00(time.minutes()) +
+          ":" +
+          displayTime00(time.seconds())
+        : "00:00:00"}
+    </div>
+  );
 };
 
 export default TimerTime;

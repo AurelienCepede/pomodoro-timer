@@ -19,10 +19,10 @@ function App() {
           Pomodoro <span>25 min</span>
         </button>
         <button onClick={() => setTime(5.0)}>
-          Short Pause <span>5 min</span>
+          Short break <span>5 min</span>
         </button>
-        <button onClick={() => setTime(10.0)}>
-          Long Pause <span>10 min</span>
+        <button onClick={() => setTime(30.0)}>
+          Long break <span>30 min</span>
         </button>
         <div>
           <input
