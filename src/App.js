@@ -1,24 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import Timer from "./Timer";
+import pomodoro from "./images/pomodoro.png";
 
 function App() {
+  const [time, setTime] = useState(25);
+  const [autoStart, setAutoStart] = useState(false);
+  const toggleStartAuto = () => setAutoStart(!autoStart);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Pomodoro Timer</h1>
+      <div className="pomodoro">
+        <img src={pomodoro} alt="" />
+      </div>
+      <div className="Select-Time-Buttons">
+        <button onClick={() => setTime(25.0)}>
+          Pomodoro <span>25 min</span>
+        </button>
+        <button onClick={() => setTime(5.0)}>
+          Short Pause <span>5 min</span>
+        </button>
+        <button onClick={() => setTime(10.0)}>
+          Long Pause <span>10 min</span>
+        </button>
+        <div>
+          <input
+            type="checkbox"
+            id="start-auto"
+            onChange={toggleStartAuto}
+            onClick={toggleStartAuto}
+            checked={autoStart}
+          />
+          <label htmlFor="start-auto"> Auto-start when reset or change</label>
+        </div>
+        <Timer timeLeftInMinute={time} autoStart={autoStart} />
+      </div>
     </div>
   );
 }
